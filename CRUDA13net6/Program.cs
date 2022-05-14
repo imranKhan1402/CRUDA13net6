@@ -1,5 +1,6 @@
 using CRUDA13net6.DBO;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,11 @@ builder.Services.AddCors((setup)=>
         options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
     });
 });
+
+
+//Json Return serialization
+builder.Services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 var app = builder.Build();
 

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Data;
 
 namespace CRUDA13net6.Controllers
@@ -39,6 +40,7 @@ namespace CRUDA13net6.Controllers
         //            table.Load(myReader);
         //            myReader.Close();
         //            myCon.Close();
+        //            //var data = JsonConvert.SerializeObject(table);
         //        }
         //    }
         //    return new JsonResult(table);
@@ -48,7 +50,7 @@ namespace CRUDA13net6.Controllers
         public async Task<IActionResult> Get()
         {
             var cards = await cardsDbContext.Employees.ToListAsync();
-            return Ok(cards);
+            return Ok(JsonConvert.SerializeObject(cards));
         }
 
 

@@ -3,6 +3,7 @@ using CRUDA13net6.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace CRUDA13net6.Controllers
 {
@@ -22,7 +23,7 @@ namespace CRUDA13net6.Controllers
         public async Task<IActionResult> getAllCards()
         {
             var cards = await cardsDbContext.Cards.ToListAsync();
-            return Ok(cards);
+            return Ok(JsonConvert.SerializeObject(cards));
         }
 
         //Get Card by ID
@@ -34,7 +35,7 @@ namespace CRUDA13net6.Controllers
             var card = await cardsDbContext.Cards.FirstOrDefaultAsync(x => x.Id == id);
             if (card != null)
             {
-                return Ok(card);
+                return Ok(JsonConvert.SerializeObject(card));
             }
 
             return NotFound("Card Not Found");
@@ -70,7 +71,7 @@ namespace CRUDA13net6.Controllers
                 exist.ExpiryMonth = card.ExpiryMonth;
                 exist.CVC   = card.CVC;
                 await cardsDbContext.SaveChangesAsync();
-                return Ok(exist);
+                return Ok(JsonConvert.SerializeObject(exist));
             }
             return NotFound("Card Not Found");
         }
@@ -85,7 +86,7 @@ namespace CRUDA13net6.Controllers
             {
                 cardsDbContext.Cards.Remove(exist);
                 await cardsDbContext.SaveChangesAsync();
-                return Ok(exist);
+                return Ok(JsonConvert.SerializeObject(exist));
             }
             return NotFound("Card Not Found");
         }
