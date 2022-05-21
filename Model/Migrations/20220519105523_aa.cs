@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CRUDA13net6.Migrations
+namespace Model.Migrations
 {
-    public partial class initial : Migration
+    public partial class aa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,9 +12,10 @@ namespace CRUDA13net6.Migrations
                 name: "Cards",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CardHolderName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CardHolderName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExpiryMonth = table.Column<int>(type: "int", nullable: false),
                     ExpiryYear = table.Column<int>(type: "int", nullable: false),
                     CVC = table.Column<int>(type: "int", nullable: false)

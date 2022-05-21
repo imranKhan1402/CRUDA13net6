@@ -1,9 +1,10 @@
-﻿using CRUDA13net6.DBO;
-using CRUDA13net6.Models;
+﻿using Manager.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Model.CardC;
+using Model.Context;
 using Newtonsoft.Json;
 using System.Data;
 
@@ -15,12 +16,12 @@ namespace CRUDA13net6.Controllers
     {
         public readonly IConfiguration _configuration;
         public readonly IWebHostEnvironment _environment;
-        private readonly CardsDbContext cardsDbContext;
-        public EmployeeController(IConfiguration configuration, IWebHostEnvironment environment, CardsDbContext cardsDbContext)
+        private readonly ITAPIManager iTAPIManager;
+        public EmployeeController(IConfiguration configuration, IWebHostEnvironment environment, ITAPIManager _iTAPIManager)
         {
             _configuration = configuration;
             _environment = environment;
-            this.cardsDbContext = cardsDbContext;
+            iTAPIManager = _iTAPIManager;
         }
 
         //[HttpGet]
@@ -49,8 +50,7 @@ namespace CRUDA13net6.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var cards = await cardsDbContext.Employees.ToListAsync();
-            return Ok(JsonConvert.SerializeObject(cards));
+            return Ok(JsonConvert.SerializeObject(await iTAPIManager.GetAllEmployees()));
         }
 
 

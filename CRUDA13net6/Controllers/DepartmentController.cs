@@ -1,9 +1,10 @@
-﻿using CRUDA13net6.DBO;
-using CRUDA13net6.Models;
+﻿using Manager.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Model.CardC;
+using Model.Context;
 using Newtonsoft.Json;
 using System.Data;
 
@@ -14,11 +15,11 @@ namespace CRUDA13net6.Controllers
     public class DepartmentController : ControllerBase
     {
         public readonly IConfiguration _configuration;
-        private readonly CardsDbContext cardsDbContext;
-        public DepartmentController(IConfiguration configuration, CardsDbContext cardsDbContext)
+        private readonly ITAPIManager iTAPIManager;
+        public DepartmentController(IConfiguration configuration, ITAPIManager _iTAPIManager)
         {
             _configuration = configuration;
-            this.cardsDbContext = cardsDbContext;
+            iTAPIManager = _iTAPIManager;
         }
 
         //[HttpGet]
@@ -48,8 +49,7 @@ namespace CRUDA13net6.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var cards = await cardsDbContext.Departments.ToListAsync();
-            return Ok(JsonConvert.SerializeObject(cards));
+            return Ok(JsonConvert.SerializeObject(await iTAPIManager.GetAllDepartments()));
         }
 
 

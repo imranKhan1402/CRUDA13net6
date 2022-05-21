@@ -1,6 +1,10 @@
-using CRUDA13net6.DBO;
+using Manager.Interface;
+using Manager.Repository;
 using Microsoft.EntityFrameworkCore;
+using Model.Context;
 using Newtonsoft.Json.Serialization;
+using Service.Interface;
+using Service.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +20,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<CardsDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("CardsDbConnection")));
+
+//builder.Services.AddScoped<ICardService, CardService>();
+builder.Services.AddScoped<ICardManager, CardManager>();
+builder.Services.AddScoped<ITAPIManager, TAPIManager>();
+
 
 builder.Services.AddCors((setup)=>
 {

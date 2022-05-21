@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace CRUDA13net6.Migrations
+namespace Model.Migrations
 {
-    public partial class second : Migration
+    public partial class _2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace CRUDA13net6.Migrations
                 {
                     DepartmentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DepartmentName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DepartmentName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,10 +27,10 @@ namespace CRUDA13net6.Migrations
                 {
                     EmployeeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Department = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfJoining = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhotoFileName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    EmployeeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfJoining = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoFileName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
