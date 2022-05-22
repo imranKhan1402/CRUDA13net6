@@ -52,28 +52,36 @@ namespace CRUDA13net6.Controllers
             return Ok(JsonConvert.SerializeObject(await iTAPIManager.GetAllDepartments()));
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetDepartmentByID(int id)
+        {
+            return Ok(JsonConvert.SerializeObject(await iTAPIManager.GetDepartmentByID(id)));
+        }
+
 
         [HttpPost]
-        public JsonResult Post(Department Dep)
+        public async Task<IActionResult> Post(Department Dep)
         {
-            string query = @"insert into dbo.Departments values(@DepartmentName)";//SELECT PaymenyDetailID,CardOwnerName,CardNumber,ExpirationDate,SecurityCode FROM dbo.paymentDetails
+            //string query = @"insert into dbo.Departments values(@DepartmentName)";//SELECT PaymenyDetailID,CardOwnerName,CardNumber,ExpirationDate,SecurityCode FROM dbo.paymentDetails
 
-            DataTable table = new DataTable();
-            string sqlDataSrc = _configuration.GetConnectionString("CardsDbConnection");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSrc))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myCommand.Parameters.AddWithValue("@DepartmentName", Dep.DepartmentName);
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult("Added Successfully");
+            //DataTable table = new DataTable();
+            //string sqlDataSrc = _configuration.GetConnectionString("CardsDbConnection");
+            //SqlDataReader myReader;
+            //using (SqlConnection myCon = new SqlConnection(sqlDataSrc))
+            //{
+            //    myCon.Open();
+            //    using (SqlCommand myCommand = new SqlCommand(query, myCon))
+            //    {
+            //        myCommand.Parameters.AddWithValue("@DepartmentName", Dep.DepartmentName);
+            //        myReader = myCommand.ExecuteReader();
+            //        table.Load(myReader);
+            //        myReader.Close();
+            //        myCon.Close();
+            //    }
+            //}
+
+            return Ok(await iTAPIManager.createDepartment(Dep));
         }
 
 

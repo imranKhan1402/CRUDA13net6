@@ -1,4 +1,5 @@
 ﻿using Manager.Interface;
+using Microsoft.EntityFrameworkCore;
 using Model.CardC;
 using Model.Context;
 using Service.Interface;
@@ -22,10 +23,16 @@ namespace Manager.Repository
             iDepartmentService = new DepartmentService(cardsDbContext);
             iEmployeeService = new EmployeeService(cardsDbContext);
         }
-        public Task<Department> createDepartment(Department department)
+        public async Task<Department> createDepartment(Department department)
         {
-            throw new NotImplementedException();
+            var exist = cardsDbContext.Departments.FirstOrDefaultAsync(dept => dept.DepartmentName == department.DepartmentName);
+            if (exist.Result == null)
+            {
+                return await iDepartmentService.createDepartment(department);
+            }
+            return await exist;
         }
+
 
         public Task<Employee> createEmployee(Employee employee)
         {
@@ -42,9 +49,9 @@ namespace Manager.Repository
             return await iEmployeeService.GetAllEmployees();
         }
 
-        public Task<Department> GetDepartmentByID(int id)
+        public async Task<Department> GetDepartmentByID(int id)
         {
-            throw new NotImplementedException();
+            return await iDepartmentService.GetDepartmentByID(id);
         }
 
         public Task<Employee> GetEmployeeByID(int id)

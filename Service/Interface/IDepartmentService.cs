@@ -10,5 +10,7 @@ namespace Service.Interface
     public interface IDepartmentService
     {
         Task<List<Department>> GetAllDepartments();
+        Task<Department> createDepartment(Department department);
+        Task<Department> GetDepartmentByID(int id);
     }
 }
