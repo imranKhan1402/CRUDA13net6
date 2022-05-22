@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Model.CardC;
 using Model.Context;
+using Newtonsoft.Json;
 using Service.Interface;
 using Service.Repository;
+using SideClass.HelpingClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,8 @@ using System.Threading.Tasks;
 namespace Manager.Repository
 {
     public class TAPIManager : ITAPIManager
-    {
+    { 
+        SideHelper sideHelper = new SideHelper();
         private readonly IDepartmentService iDepartmentService;
         private readonly IEmployeeService iEmployeeService;
         private readonly CardsDbContext cardsDbContext;
@@ -23,14 +26,22 @@ namespace Manager.Repository
             iDepartmentService = new DepartmentService(cardsDbContext);
             iEmployeeService = new EmployeeService(cardsDbContext);
         }
-        public async Task<Department> createDepartment(Department department)
+        public async Task<string> createDepartment(Department department)
         {
-            var exist = cardsDbContext.Departments.FirstOrDefaultAsync(dept => dept.DepartmentName == department.DepartmentName);
-            if (exist.Result == null)
+            try
             {
-                return await iDepartmentService.createDepartment(department);
+                var fetchData = cardsDbContext.Departments.FirstOrDefaultAsync(dept => dept.DepartmentName == department.DepartmentName);
+                if (fetchData.Result == null)
+                {
+                    return await iDepartmentService.createDepartment(department);
+                }
+                return await Task.FromResult(sideHelper.DepartmentObjectStringBuilder(fetchData.Result, "Exists").Result.ToString());
             }
-            return await exist;
+            catch (Exception ex)
+            {
+
+                return await Task.FromResult(ex.ToString());
+            }
         }
 
 

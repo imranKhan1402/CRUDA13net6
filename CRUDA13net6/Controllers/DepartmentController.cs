@@ -61,7 +61,7 @@ namespace CRUDA13net6.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post(Department Dep)
+        public async Task<string> Post(Department Dep)
         {
             //string query = @"insert into dbo.Departments values(@DepartmentName)";//SELECT PaymenyDetailID,CardOwnerName,CardNumber,ExpirationDate,SecurityCode FROM dbo.paymentDetails
 
@@ -81,7 +81,7 @@ namespace CRUDA13net6.Controllers
             //    }
             //}
 
-            return Ok(await iTAPIManager.createDepartment(Dep));
+            return await iTAPIManager.createDepartment(Dep);
         }
 
 
