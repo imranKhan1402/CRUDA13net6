@@ -11,6 +11,6 @@ namespace Service.Interface
     {
         Task<List<Department>> GetAllDepartments();
         Task<string> createDepartment(Department department);
-        Task<Department> GetDepartmentByID(int id);
+        Task<string> GetDepartmentByID(int id);
     }
 }

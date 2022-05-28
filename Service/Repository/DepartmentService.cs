@@ -35,9 +35,9 @@ namespace Service.Repository
             return await cardsDbContext.Departments.ToListAsync();
         }
 
-        public async Task<Department> GetDepartmentByID(int id)
+        public async Task<string> GetDepartmentByID(int id)
         {
-            return await cardsDbContext.Departments.FirstOrDefaultAsync(dept => dept.DepartmentId == id);
+            return await Task.FromResult(sideHelper.DepartmentObjectStringBuilder((cardsDbContext.Departments.FirstOrDefaultAsync(dept => dept.DepartmentId == id)).Result, "Success").Result.ToString());//cardsDbContext.Departments.FirstOrDefaultAsync(dept => dept.DepartmentId == id);
         }
     }
 }

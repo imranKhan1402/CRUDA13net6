@@ -10,7 +10,7 @@ namespace Manager.Interface
     public interface ITAPIManager
     {
         Task<List<Department>> GetAllDepartments();
-        Task<Department> GetDepartmentByID(int id);
+        Task<string> GetDepartmentByID(int id);
         Task<string> createDepartment(Department department);
         Task<List<Employee>> GetAllEmployees();
         Task<Employee> GetEmployeeByID(int id);

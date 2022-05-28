@@ -60,7 +60,7 @@ namespace Manager.Repository
             return await iEmployeeService.GetAllEmployees();
         }
 
-        public async Task<Department> GetDepartmentByID(int id)
+        public async Task<string> GetDepartmentByID(int id)
         {
             return await iDepartmentService.GetDepartmentByID(id);
         }
