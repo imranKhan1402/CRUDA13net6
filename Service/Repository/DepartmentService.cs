@@ -4,6 +4,7 @@ using Model.Context;
 using Newtonsoft.Json;
 using Service.Interface;
 using SideClass.HelpingClass;
+using SideClass.ReCycle;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -34,7 +35,6 @@ namespace Service.Repository
         {
             return await cardsDbContext.Departments.ToListAsync();
         }
-
         public async Task<string> GetDepartmentByID(int id)
         {
             return await Task.FromResult(sideHelper.DepartmentObjectStringBuilder((cardsDbContext.Departments.FirstOrDefaultAsync(dept => dept.DepartmentId == id)).Result, "Success").Result.ToString());//cardsDbContext.Departments.FirstOrDefaultAsync(dept => dept.DepartmentId == id);
