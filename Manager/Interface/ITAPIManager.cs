@@ -15,5 +15,7 @@ namespace Manager.Interface
         Task<List<Employee>> GetAllEmployees();
         Task<Employee> GetEmployeeByID(int id);
         Task<Employee> createEmployee(Employee employee);
+        Task<string> deleteDepartment(int ID);
+        Task<List<Card>> GetAllCards();
     }
 }

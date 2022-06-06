@@ -24,6 +24,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("CardsDbConnectio
 //builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<ICardManager, CardManager>();
 builder.Services.AddScoped<ITAPIManager, TAPIManager>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 builder.Services.AddCors((setup)=>

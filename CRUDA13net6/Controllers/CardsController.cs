@@ -13,10 +13,10 @@ namespace CRUDA13net6.Controllers
     [ApiController]
     public class CardsController : ControllerBase
     {
-        private readonly ICardManager iCardManager;
-        public CardsController(ICardManager _iCardManager)
+        private readonly ITAPIManager iTAPIManager;
+        public CardsController(ITAPIManager _iTAPIManager)
         {
-            iCardManager = _iCardManager;
+            iTAPIManager = _iTAPIManager;
         }
 
         //private readonly CardsDbContext cardsDbContext;
@@ -31,7 +31,7 @@ namespace CRUDA13net6.Controllers
         public async Task<IActionResult> getAllCards()
         {
             //var cards = await cardsDbContext.Cards.ToListAsync();
-            return Ok(JsonConvert.SerializeObject(await iCardManager.getAllCards()));
+            return Ok(JsonConvert.SerializeObject(await iTAPIManager.GetAllCards()));
         }
         //[HttpGet]
         //public string GetAllEmployee()

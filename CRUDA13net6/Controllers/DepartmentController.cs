@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Model.CardC;
 using Model.Context;
 using Newtonsoft.Json;
+using Service.Interface;
 using System.Data;
 
 namespace CRUDA13net6.Controllers
@@ -16,10 +17,12 @@ namespace CRUDA13net6.Controllers
     {
         public readonly IConfiguration _configuration;
         private readonly ITAPIManager iTAPIManager;
+        //private readonly IDepartment iDepartment;
         public DepartmentController(IConfiguration configuration, ITAPIManager _iTAPIManager)
         {
             _configuration = configuration;
             iTAPIManager = _iTAPIManager;
+            //iDepartment = _iDepartment;
         }
 
         //[HttpGet]
@@ -50,6 +53,7 @@ namespace CRUDA13net6.Controllers
         public async Task<IActionResult> Get()
         {
             return Ok(JsonConvert.SerializeObject(await iTAPIManager.GetAllDepartments()));
+            //return Ok(JsonConvert.SerializeObject(await iDepartment.GetAll()));
         }
 
         [HttpGet]
@@ -111,26 +115,27 @@ namespace CRUDA13net6.Controllers
 
 
         [HttpDelete("{Id}")]
-        public JsonResult Delete(int Id)
+        public async Task<string> Delete(int Id)
         {
-            string query = @"delete from  dbo.Departments  where DepartmentId = @DepartmentId";//SELECT PaymenyDetailID,CardOwnerName,CardNumber,ExpirationDate,SecurityCode FROM dbo.paymentDetails
+            //string query = @"delete from  dbo.Departments  where DepartmentId = @DepartmentId";//SELECT PaymenyDetailID,CardOwnerName,CardNumber,ExpirationDate,SecurityCode FROM dbo.paymentDetails
 
-            DataTable table = new DataTable();
-            string sqlDataSrc = _configuration.GetConnectionString("CardsDbConnection");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSrc))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myCommand.Parameters.AddWithValue("@DepartmentId", Id);
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult("Deleted Successfully");
+            //DataTable table = new DataTable();
+            //string sqlDataSrc = _configuration.GetConnectionString("CardsDbConnection");
+            //SqlDataReader myReader;
+            //using (SqlConnection myCon = new SqlConnection(sqlDataSrc))
+            //{
+            //    myCon.Open();
+            //    using (SqlCommand myCommand = new SqlCommand(query, myCon))
+            //    {
+            //        myCommand.Parameters.AddWithValue("@DepartmentId", Id);
+            //        myReader = myCommand.ExecuteReader();
+            //        table.Load(myReader);
+            //        myReader.Close();
+            //        myCon.Close();
+            //    }
+            //}
+            //return new JsonResult("Deleted Successfully");
+            return await iTAPIManager.deleteDepartment(Id);
         }
     }
 }
